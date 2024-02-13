@@ -17,16 +17,21 @@ export type userDto = Omit<createUserDto, "username" | "password"> & {
 };
 
 type Success = {
-  user: userDto,
-  status: number
+  user: userDto;
+  status: number;
 };
 type userAlreadyExists = {
-  user: userDto,
-  status: number
+  user: userDto;
+  status: number;
 };
 type userError = {
-  user: null,
-  status: number
+  user: null;
+  status: number;
 };
 
 export type createUserResponseDto = Success | userAlreadyExists | userError;
+
+export type userLoginDto = {
+  username: string;
+  password: string;
+};

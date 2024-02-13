@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import { userController } from "../controllers";
 import { requestValidator } from "../middlewares";
-import { createUserSchema } from "../schemas";
-import { AnyZodObject } from "zod";
+import { createUserSchema, loginSchema } from "../schemas";
+import { authtValidator } from "../middlewares/authValidator";
 
 export const userRoutes = express.Router();
 
@@ -17,12 +17,17 @@ userRoutes.get("/:id", async (req, res) => {
 });
 
 /* Create User */
-userRoutes.post("/", requestValidator(createUserSchema), async (req, res) => {
-  const response = await userController.create(req.body);
-  if (response) {
-    res.status(response.status).send(response);
+userRoutes.post(
+  "/",
+  requestValidator(createUserSchema),
+  authtValidator(),
+  async (req, res) => {
+    const response = await userController.create(req.body);
+    if (response) {
+      res.status(response.status).send(response);
+    }
   }
-});
+);
 
 /* Update User by ID */
 userRoutes.patch("/:id", async (req, res) => {

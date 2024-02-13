@@ -16,3 +16,10 @@ export const createUserSchema = z.object({
     password: z.string({ required_error: "password is required" }),
   }),
 });
+
+export const loginSchema = z.object({
+  body: z.object({
+    username: z.string({ required_error: "Name is required" }),
+    password: z.string({ required_error: "Name is required" }),
+  }),
+});

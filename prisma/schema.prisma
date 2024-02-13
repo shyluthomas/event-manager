@@ -31,7 +31,8 @@ model Login {
   id        Int     @id @default(autoincrement())
   username  String
   password  String
-  tokens    String
+  token    String
+  refreshToken String
   user      User     @relation(fields: [userId], references: [id])
   userId    Int      @unique
 }

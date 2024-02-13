@@ -9,11 +9,11 @@ export const userEntity = {
     try {
       const exist = await prisma.user.findUnique({
         where: {
-            email: user.email,
-          },
-      })
-      if(exist) {
-        return {user:null,status: 409}
+          email: user.email,
+        },
+      });
+      if (exist) {
+        return { user: null, status: 409 };
       }
       result = await prisma.user.create({
         data: {
@@ -34,7 +34,8 @@ export const userEntity = {
         data: {
           username: user.username,
           password: user.password,
-          tokens: token,
+          token: "",
+          refreshToken: "",
           userId: result.id,
         },
       });
