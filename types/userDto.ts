@@ -35,3 +35,7 @@ export type userLoginDto = {
   username: string;
   password: string;
 };
+
+export type userGetDto = createUserDto & {
+  id: number;
+};

@@ -23,3 +23,9 @@ export const loginSchema = z.object({
     password: z.string({ required_error: "Name is required" }),
   }),
 });
+
+export const getUserSchema = z.object({
+  params: z.object({
+    id: z.string({ required_error: "user id is required" }),
+  }),
+});

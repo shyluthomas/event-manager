@@ -1,6 +1,11 @@
 import { errorHandler } from "../lib";
 import { prisma } from "../lib/dbcon";
-import { createUserDto, createUserResponseDto, userDto } from "../types";
+import {
+  createUserDto,
+  createUserResponseDto,
+  userDto,
+  userGetDto,
+} from "../types";
 
 export const userEntity = {
   createUser: async (user: createUserDto): Promise<createUserResponseDto> => {
@@ -46,6 +51,14 @@ export const userEntity = {
     }
 
     return { user: result, status: status };
+  },
+  getUser: async (id: number): Promise<userGetDto | null> => {
+    const user = (await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    })) as userGetDto;
+    return user;
   },
   updateUser: async () => {},
   deleteuser: async (params: any) => {},

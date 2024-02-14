@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { userController } from "../controllers";
 import { requestValidator } from "../middlewares";
-import { createUserSchema, loginSchema } from "../schemas";
+import { createUserSchema, getUserSchema, loginSchema } from "../schemas";
 import { authtValidator } from "../middlewares/authValidator";
 
 export const userRoutes = express.Router();
@@ -12,9 +12,16 @@ userRoutes.get("/", async (req: Request, res: Response) => {
 });
 
 /* getting Event by ID */
-userRoutes.get("/:id", async (req, res) => {
-  console.log("/get event by id");
-});
+userRoutes.get(
+  "/:id",
+  requestValidator(getUserSchema),
+  authtValidator(),
+  async (req, res) => {
+    const id = req.params.id as string;
+    const response = await userController.getUser(parseInt(id, 10));
+    res.status(200).send(response);
+  }
+);
 
 /* Create User */
 userRoutes.post("/", requestValidator(createUserSchema), async (req, res) => {
