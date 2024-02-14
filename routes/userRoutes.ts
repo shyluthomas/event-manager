@@ -17,17 +17,12 @@ userRoutes.get("/:id", async (req, res) => {
 });
 
 /* Create User */
-userRoutes.post(
-  "/",
-  requestValidator(createUserSchema),
-  authtValidator(),
-  async (req, res) => {
-    const response = await userController.create(req.body);
-    if (response) {
-      res.status(response.status).send(response);
-    }
+userRoutes.post("/", requestValidator(createUserSchema), async (req, res) => {
+  const response = await userController.create(req.body);
+  if (response) {
+    res.status(response.status).send(response);
   }
-);
+});
 
 /* Update User by ID */
 userRoutes.patch("/:id", async (req, res) => {

@@ -1,3 +1,4 @@
+import { number } from "zod";
 import { userLoginEntity } from "../entities";
 import { prisma } from "../lib";
 import helpers from "../lib/helpers";
@@ -5,6 +6,8 @@ import {
   LoginResponseDto,
   LoginResponseErrorDto,
   loginDataDto,
+  tokenDecodeRepsonseDetailsDto,
+  tokenDecodeRepsonseDto,
   userLoginDto,
 } from "../types";
 
@@ -60,5 +63,38 @@ export const loginController = {
     }
 
     return valid;
+  },
+
+  refreshToken: async (token: string): Promise<LoginResponseDto> => {
+    let response: LoginResponseDto = {
+      status: 401,
+      token: "",
+      refreshToken: "",
+    };
+    const decodeToken = helpers.decodeTokenJWT(token);
+    if (decodeToken.status === 401) {
+      response = {
+        status: 401,
+        token: "",
+        refreshToken: "",
+      };
+      return response;
+    }
+    const jwtPayload = {
+      username: decodeToken.tokenData.user.username,
+      userId: decodeToken.tokenData.user.id,
+      password: "",
+    };
+    const newToken: LoginResponseDto = helpers.generateJwtToken(jwtPayload);
+    const updateLogin = userLoginEntity.update({
+      id: 0,
+      userId: decodeToken.tokenData.user.id,
+      token: newToken.token,
+      refreshToken: newToken.refreshToken,
+    });
+
+    response = { ...newToken };
+
+    return response;
   },
 };
