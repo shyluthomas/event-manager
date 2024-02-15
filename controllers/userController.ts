@@ -10,4 +10,11 @@ export const userController = {
     const response = await userEntity.getUser(id);
     return response;
   },
+  updateUser: async (
+    id: number,
+    data: userGetDto
+  ): Promise<userGetDto | null> => {
+    const response = await userEntity.updateUser(id, data);
+    return response;
+  },
 };

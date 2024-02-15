@@ -1,8 +1,14 @@
 import express, { Request, Response } from "express";
 import { userController } from "../controllers";
 import { requestValidator } from "../middlewares";
-import { createUserSchema, getUserSchema, loginSchema } from "../schemas";
+import {
+  createUserSchema,
+  getUserSchema,
+  loginSchema,
+  updateUserSchema,
+} from "../schemas";
 import { authtValidator } from "../middlewares/authValidator";
+import { userGetDto } from "../types";
 
 export const userRoutes = express.Router();
 
@@ -32,9 +38,17 @@ userRoutes.post("/", requestValidator(createUserSchema), async (req, res) => {
 });
 
 /* Update User by ID */
-userRoutes.patch("/:id", async (req, res) => {
-  console.log("/update User");
-});
+userRoutes.patch(
+  "/:id",
+  requestValidator(updateUserSchema),
+  authtValidator(),
+  async (req, res) => {
+    const id = req.params.id as string;
+    const data = req.body as userGetDto;
+    const response = await userController.updateUser(parseInt(id, 10), data);
+    res.status(200).send(response);
+  }
+);
 
 /* Delete User */
 userRoutes.delete("/", async (req, res) => {

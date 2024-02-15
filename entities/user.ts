@@ -60,6 +60,30 @@ export const userEntity = {
     })) as userGetDto;
     return user;
   },
-  updateUser: async () => {},
+  updateUser: async (
+    id: number,
+    data: userGetDto
+  ): Promise<userGetDto | null> => {
+    try {
+      const user = (await prisma.user.findUnique({
+        where: {
+          id: id,
+        },
+      })) as userGetDto;
+      if (!user) {
+        return null;
+      }
+      const update = await prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: data,
+      });
+      return user;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
   deleteuser: async (params: any) => {},
 };
