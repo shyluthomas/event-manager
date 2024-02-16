@@ -1,13 +1,11 @@
 import { number } from "zod";
 import { userLoginEntity } from "../entities";
-import { prisma } from "../lib";
+import { prisma, statusCode } from "../lib";
 import helpers from "../lib/helpers";
 import {
   LoginResponseDto,
   LoginResponseErrorDto,
   loginDataDto,
-  tokenDecodeRepsonseDetailsDto,
-  tokenDecodeRepsonseDto,
   userLoginDto,
 } from "../types";
 
@@ -21,7 +19,7 @@ export const loginController = {
     try {
       const username = await userLoginEntity.findUsername(user);
       if (!username) {
-        loginResponse = { status: 401 };
+        loginResponse = { status: statusCode.HTTP_UNAUTHORISED };
         return loginResponse;
       }
       const tokenData: loginDataDto | null = await userLoginEntity.findPassword(
@@ -40,11 +38,11 @@ export const loginController = {
           token: newToken.token,
           refreshToken: newToken.refreshToken,
         });
-        loginResponse = { ...newToken, status: 200 };
+        loginResponse = { ...newToken, status: statusCode.HTTP_SUCESS };
         return loginResponse;
       }
     } catch (e: any) {
-      return { status: 401 };
+      return { status: statusCode.HTTP_UNAUTHORISED };
     }
 
     return loginResponse;
@@ -67,14 +65,14 @@ export const loginController = {
 
   refreshToken: async (token: string): Promise<LoginResponseDto> => {
     let response: LoginResponseDto = {
-      status: 401,
+      status: statusCode.HTTP_UNAUTHORISED,
       token: "",
       refreshToken: "",
     };
     const decodeToken = helpers.decodeTokenJWT(token);
-    if (decodeToken.status === 401) {
+    if (decodeToken.status === statusCode.HTTP_UNAUTHORISED) {
       response = {
-        status: 401,
+        status: statusCode.HTTP_UNAUTHORISED,
         token: "",
         refreshToken: "",
       };

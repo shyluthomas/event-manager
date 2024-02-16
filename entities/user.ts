@@ -1,16 +1,11 @@
-import { errorHandler } from "../lib";
+import { errorHandler, statusCode } from "../lib";
 import { prisma } from "../lib/dbcon";
-import {
-  createUserDto,
-  createUserResponseDto,
-  userDto,
-  userGetDto,
-} from "../types";
+import { createUserDto, createUserResponseDto, userGetDto } from "../types";
 
 export const userEntity = {
   createUser: async (user: createUserDto): Promise<createUserResponseDto> => {
     let result;
-    let status = 201;
+    let status = statusCode.HTTP_SUCESS_CREATED;
     try {
       const exist = await prisma.user.findUnique({
         where: {
@@ -18,7 +13,7 @@ export const userEntity = {
         },
       });
       if (exist) {
-        return { user: null, status: 409 };
+        return { user: null, status: statusCode.HTTP_CONFLICT };
       }
       result = await prisma.user.create({
         data: {
@@ -46,7 +41,7 @@ export const userEntity = {
       });
     } catch (e) {
       result = null;
-      status = 404;
+      status = statusCode.HTTP_NOTFOUND;
       console.log("error", e);
     }
 
