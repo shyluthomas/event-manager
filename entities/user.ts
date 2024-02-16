@@ -85,5 +85,27 @@ export const userEntity = {
       return null;
     }
   },
-  deleteuser: async (params: any) => {},
+  deleteUser: async (id: number): Promise<userGetDto | null> => {
+    const user = (await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    })) as userGetDto;
+
+    if (!user) {
+      return null;
+    }
+    try {
+      await prisma.user.delete({
+        where: {
+          id: id,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+
+    return user;
+  },
 };

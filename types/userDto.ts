@@ -24,7 +24,7 @@ type userAlreadyExists = {
   user: userDto;
   status: number;
 };
-type userError = {
+export type userError = {
   user: null;
   status: number;
 };
@@ -38,4 +38,9 @@ export type userLoginDto = {
 
 export type userGetDto = createUserDto & {
   id: number;
+};
+
+export type userGetDtoResponse = {
+  user: createUserDto & { id: number };
+  status: number;
 };

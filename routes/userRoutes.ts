@@ -8,7 +8,7 @@ import {
   updateUserSchema,
 } from "../schemas";
 import { authtValidator } from "../middlewares/authValidator";
-import { userGetDto } from "../types";
+import { userError, userGetDto, userGetDtoResponse } from "../types";
 
 export const userRoutes = express.Router();
 
@@ -24,8 +24,10 @@ userRoutes.get(
   authtValidator(),
   async (req, res) => {
     const id = req.params.id as string;
-    const response = await userController.getUser(parseInt(id, 10));
-    res.status(200).send(response);
+    const response = (await userController.getUser(parseInt(id, 10))) as
+      | userGetDtoResponse
+      | userError;
+    res.status(response.status).send(response);
   }
 );
 
@@ -51,6 +53,15 @@ userRoutes.patch(
 );
 
 /* Delete User */
-userRoutes.delete("/", async (req, res) => {
-  console.log("/delete User");
-});
+userRoutes.delete(
+  "/:id",
+  requestValidator(updateUserSchema),
+  authtValidator(),
+  async (req, res) => {
+    const id = req.params.id as string;
+    const response = (await userController.deleteUser(parseInt(id, 10))) as
+      | userGetDtoResponse
+      | userError;
+    res.status(response.status).send(response);
+  }
+);
