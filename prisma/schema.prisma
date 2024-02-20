@@ -48,17 +48,49 @@ model Event {
   updatedAt  DateTime   @updatedAt
   title      String
   description String
+  eventCategoryId Int
+  eventCardImage String
   published  Boolean    @default(false)
   owner      User       @relation(fields: [ownerId], references: [id])
   ownerId   Int
+  eventItenary EventItenary[]
+  status Boolean
+  invite Invite[]
+  ticketTotalCount Int
 }
+
+
 
 model Invite {
   id         Int        @id @default(autoincrement())
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   status     Boolean    @default(false)
-  invitedBy    User     @relation(fields: [inviterId], references: [id])
+  invitedBy  User     @relation(fields: [inviterId], references: [id])
   inviterId  Int
+  ticket Tickets?
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId Int
+}
+
+model Tickets {
+  id Int @id
+  invite Invite @relation(fields: [inviteId],references: [id], onDelete: Cascade)
+  inviteId Int @unique
+  status Boolean
+ 
+}
+
+model EventCategory {
+  id Int @id @default(autoincrement())
+  name String
+}
+
+model EventItenary {
+  id Int @id @default(autoincrement())
+  eventId Int
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  schedule String
+  description String
 }
 

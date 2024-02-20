@@ -1,9 +1,13 @@
 import express from "express";
+import { eventController } from "../controllers/eventController";
+import { createEventSchema } from "../schemas";
+import { requestValidator } from "../middlewares";
+import { authtValidator } from "../middlewares/authValidator";
 
 export const eventRoutes = express.Router();
 
 /* getting Events */
-eventRoutes.get("/", async (req, res) => {
+eventRoutes.get("/list", async (req, res) => {
   console.log("/get events");
 });
 
@@ -13,8 +17,12 @@ eventRoutes.get("/:id", async (req, res) => {
 });
 
 /* Create Events */
-eventRoutes.post("/", async (req, res) => {
+eventRoutes.post("/",requestValidator(createEventSchema),authtValidator(), async (req, res) => {
   console.log("/create  events");
+  const response = await eventController.createEvent(req.body);
+  if (response) {
+    res.status(response.status).send(response);
+  }
 });
 
 /* Update Events by ID */

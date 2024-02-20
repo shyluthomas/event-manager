@@ -4,7 +4,7 @@ import { AnyZodObject } from "zod";
 export function requestValidator(schema: AnyZodObject) {
   return function (req: Request, res: Response, next: NextFunction) {
     try {
-      schema.safeParse({
+      schema.parse({
         body: req.body,
       });
       return next();
