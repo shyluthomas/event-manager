@@ -6,14 +6,22 @@ import { userRoutes, healthRoute, eventRoutes } from "./routes";
 import { logger, errorHandler } from "./middlewares";
 import { authRoutes } from "./routes/authRoutes";
 import cors = require("cors");
-
 export const startServer = () => {
   const port = process.env.PORT || 8044;
   const app = express();
   app.use(express.json());
+  app.use(
+    express.urlencoded({
+      extended: true,
+      limit: 52428800,
+      parameterLimit: 1000000,
+    })
+  );
 
   app.use(logger);
-  app.use((req, res, next) => { next(); }, cors({maxAge: 84600}));
+  app.use((req, res, next) => {
+    next();
+  }, cors({ maxAge: 84600 }));
   app.use("/health", healthRoute);
   app.use("/user", userRoutes);
   app.use("/auth", authRoutes);

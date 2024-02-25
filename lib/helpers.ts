@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import { compareAsc } from "date-fns";
+import * as fs from "fs";
+import * as path from "path";
 import {
   LoginResponseDto,
   decodedTokenDetailsDto,
@@ -64,6 +66,18 @@ const helpers = {
       console.log(e);
       return response;
     }
+  },
+  fileUpload: async (
+    fileName: string,
+    uploadPath: string,
+    file: any
+  ): Promise<string> => {
+    const fileNameToSave = Date.now() + fileName + ".jpeg";
+    fs.writeFileSync(
+      path.join(uploadPath, fileNameToSave),
+      Buffer.from(file.replace(/^data:image\/\w+;base64,/, ""), "base64")
+    );
+    return fileNameToSave;
   },
 };
 

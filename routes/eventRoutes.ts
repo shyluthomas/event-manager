@@ -17,13 +17,17 @@ eventRoutes.get("/:id", async (req, res) => {
 });
 
 /* Create Events */
-eventRoutes.post("/",requestValidator(createEventSchema),authtValidator(), async (req, res) => {
-  console.log("/create  events");
-  const response = await eventController.createEvent(req.body);
-  if (response) {
-    res.status(response.status).send(response);
+eventRoutes.post(
+  "/",
+  requestValidator(createEventSchema),
+  authtValidator(),
+  async (req, res) => {
+    const response = await eventController.createEvent(req.body);
+    if (response) {
+      res.status(response.status).send(response);
+    }
   }
-});
+);
 
 /* Update Events by ID */
 eventRoutes.patch("/:id", async (req, res) => {

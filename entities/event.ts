@@ -1,13 +1,18 @@
 import { errorHandler, statusCode } from "../lib";
 import { prisma } from "../lib/dbcon";
-import { EventCreateDto, EventGetDto, createEventResponseDto } from "../types/eventDto";
+import {
+  EventCreateDto,
+  EventGetDto,
+  createEventResponseDto,
+} from "../types/eventDto";
 
 export const eventEntity = {
-  createEvent: async (event: EventCreateDto): Promise<createEventResponseDto> => {
+  createEvent: async (
+    event: EventCreateDto
+  ): Promise<createEventResponseDto> => {
     let result;
     let status = statusCode.HTTP_SUCESS_CREATED;
     try {
-      
       result = await prisma.event.create({
         data: {
           title: event.title,
@@ -19,14 +24,13 @@ export const eventEntity = {
           status: true,
           ticketTotalCount: event.ticketTotalCount,
           eventItenary: {
-            create: event.eventItenary
-          }
+            create: event.eventItenary,
+          },
         },
-        include:{
-          eventItenary: true
-        }
+        include: {
+          eventItenary: true,
+        },
       });
-
     } catch (e) {
       result = null;
       status = statusCode.HTTP_NOTFOUND;
@@ -35,5 +39,4 @@ export const eventEntity = {
 
     return { event: result, status: status };
   },
- 
 };
