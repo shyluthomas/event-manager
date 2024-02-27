@@ -39,4 +39,17 @@ export const eventEntity = {
 
     return { event: result, status: status };
   },
+  getEvents: async (): Promise<any | null> => {
+    const events = await prisma.event.findMany({
+      include: {
+        eventItenary: {
+          select: {
+            schedule: true,
+            description: true,
+          },
+        },
+      },
+    });
+    return events;
+  },
 };

@@ -31,4 +31,11 @@ export const eventController = {
     }
     return response;
   },
+  getEvents: async (): Promise<any> => {
+    const response = await eventEntity.getEvents();
+    if (!response) {
+      return { status: statusCode.HTTP_NOTFOUND, events: null };
+    }
+    return { status: statusCode.HTTP_SUCESS, events: response };
+  },
 };
