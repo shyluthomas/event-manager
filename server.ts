@@ -2,7 +2,7 @@ import express from "express";
 // import * as compression from 'compression';
 // import helmet from 'helmet';
 
-import { userRoutes, healthRoute, eventRoutes } from "./routes";
+import { userRoutes, healthRoute, eventRoutes, profileRoutes } from "./routes";
 import { logger, errorHandler } from "./middlewares";
 import { authRoutes } from "./routes/authRoutes";
 import cors = require("cors");
@@ -26,6 +26,7 @@ export const startServer = () => {
   app.use("/user", userRoutes);
   app.use("/auth", authRoutes);
   app.use("/event", eventRoutes);
+  app.use("/profile", profileRoutes);
 
   /* Handling Error */
   app.use(errorHandler);

@@ -2,11 +2,12 @@ import { userEntity } from "../entities";
 import {
   createUserDto,
   createUserResponseDto,
+  decodedTokenDetailsDto,
   userError,
   userGetDto,
   userGetDtoResponse,
 } from "../types";
-import { statusCode } from "../lib";
+import { statusCode, tokenHandler } from "../lib";
 
 export const userController = {
   create: async (user: createUserDto): Promise<createUserResponseDto> => {
@@ -31,6 +32,15 @@ export const userController = {
     const response = await userEntity.deleteUser(id);
     if (!response) {
       return { status: statusCode.HTTP_NOTFOUND, user: response };
+    }
+    return { status: statusCode.HTTP_SUCESS, user: response };
+  },
+  getProfile: async (): Promise<userGetDtoResponse | userError> => {
+    const tokenData: decodedTokenDetailsDto = tokenHandler.tokenData;
+    const userId: number = tokenData.user.id;
+    const response = await userEntity.getUser(userId);
+    if (!response) {
+      return { status: statusCode.HTTP_NOTFOUND, user: null };
     }
     return { status: statusCode.HTTP_SUCESS, user: response };
   },
