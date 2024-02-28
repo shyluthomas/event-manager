@@ -28,7 +28,7 @@ npm install @prisma/client
 
 ## create user
 localhost:8000/user/
-post
+- post
 <code> 
 {
   "name":"Shylu",
