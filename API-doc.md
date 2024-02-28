@@ -1,9 +1,10 @@
-
 ## create user
+
 localhost:8000/user/
+
 - post
-<code> 
-{
+  <code>
+  {
   "name":"Shylu",
   "username": "99shylu",
   "password": "123",
@@ -15,26 +16,30 @@ localhost:8000/user/
   "sex" :"male",
   "dob": "10/2/2024",
   "roleId": 2
-}
-</code>
+  }
+  </code>
 
 # Login
-## localhost:8000/auth   : Post
+
+## localhost:8000/auth : Post
+
 <code>
 {"username": "99shylu",
 "password": "123456"}
 </code>
 
-
 # Delete user
+
 ## localhost:8000/user/4 : DELETE
+
 <code>
 No Body
 </code>
 
+# Refresh token
 
-# Refresh token 
 ## localhost:8000/auth/: Post
+
 <code>
 {
   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJ1c2VybmFtZSI6Ijk5c2h5bHUifSwiaWF0IjoxNzA3OTUwNDk2LCJleHAiOjE3MDc5NTA1NTZ9.AAyU7NgcK49UI1bhAjy07kEVWfrhur-YDzoq8vxQh1I"
@@ -42,7 +47,9 @@ No Body
 </code>
 
 # Update user
-## localhost:8000/user/3    Patch
+
+## localhost:8000/user/3 Patch
+
 <code>
 {
     "email": "99shydfsddfsssdlu@gmail.com",
@@ -52,7 +59,9 @@ No Body
 </code>
 
 # Create Event
-## localhost:8000/event/    : Post
+
+## localhost:8000/event/ : Post
+
 <code>
 {
     "title": "testing tdfdfdfst 2 sddfsdsdstesee",
@@ -66,17 +75,18 @@ No Body
 }
 </code>
 
-# Get all  events
-## localhost:8000/event/    : Get
+# Get all events
+
+## localhost:8000/event/ : Get
+
 <code>
 No body
 </code>
-
 
 # My profile
-## localhost:8000/profile    : Get
+
+## localhost:8000/profile : Get
+
 <code>
 No body
 </code>
-
-

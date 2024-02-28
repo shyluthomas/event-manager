@@ -5,6 +5,7 @@ import * as fs from "fs";
 import * as path from "path";
 import {
   EventCreateDto,
+  EventGetResponseDto,
   EventListDto,
   ListEventResponseDto,
   createEventResponseDto,
@@ -45,5 +46,22 @@ export const eventController = {
       return { status: statusCode.HTTP_NOTFOUND, event: null };
     }
     return { status: statusCode.HTTP_SUCESS, event: response };
+  },
+  getEvent: async (id: number): Promise<ListEventResponseDto> => {
+    const response: EventGetResponseDto = await eventEntity.getEvent(id);
+    if (!response) {
+      return { status: statusCode.HTTP_NOTFOUND, event: null };
+    }
+    return { status: statusCode.HTTP_SUCESS, event: response };
+  },
+  updateEvent: async (id: number, data: any): Promise<ListEventResponseDto> => {
+    const response: createEventResponseDto = await eventEntity.updateEvent(
+      id,
+      data
+    );
+    if (!response) {
+      return { status: statusCode.HTTP_NOTFOUND, event: null };
+    }
+    return { status: statusCode.HTTP_SUCESS, event: response.event };
   },
 };

@@ -6,6 +6,7 @@ export function requestValidator(schema: AnyZodObject) {
     try {
       schema.parse({
         body: req.body,
+        params: req.params,
       });
       return next();
     } catch (e) {

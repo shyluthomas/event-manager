@@ -27,10 +27,12 @@ npm install @prisma/client
 # API SCHEMA
 
 ## create user
+
 localhost:8000/user/
+
 - post
-<code> 
-{
+  <code>
+  {
   "name":"Shylu",
   "username": "99shylu",
   "password": "123",
@@ -42,5 +44,5 @@ localhost:8000/user/
   "sex" :"male",
   "dob": "10/2/2024",
   "roleId": 2
-}
-</code>
+  }
+  </code>

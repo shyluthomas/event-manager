@@ -55,3 +55,7 @@ export type EventListDto = EventGetDto &
     status: boolean;
   }[];
 export type ListEventResponseDto = Success | eventError;
+
+export type EventGetResponseDto = EventGetDto & {
+  status: boolean;
+};
