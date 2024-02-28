@@ -23,3 +23,24 @@ npm run studio
 ## Instal prisma client
 
 npm install @prisma/client
+
+# API SCHEMA
+
+## create user
+localhost:8000/user/
+post
+<code> 
+{
+  "name":"Shylu",
+  "username": "99shylu",
+  "password": "123",
+  "email": "99shylu@gmail.com",
+  "avatar": "http://google",
+  "language" :"english",
+  "phone": "9354887",
+  "address": "34 methuen",
+  "sex" :"male",
+  "dob": "10/2/2024",
+  "roleId": 2
+}
+</code>
