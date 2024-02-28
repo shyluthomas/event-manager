@@ -49,3 +49,9 @@ export type eventError = {
   status: number;
 };
 export type createEventResponseDto = Success | eventAlreadyExists | eventError;
+
+export type EventListDto = EventGetDto &
+  {
+    status: boolean;
+  }[];
+export type ListEventResponseDto = Success | eventError;

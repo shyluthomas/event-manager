@@ -3,6 +3,7 @@ import { prisma } from "../lib/dbcon";
 import {
   EventCreateDto,
   EventGetDto,
+  EventListDto,
   createEventResponseDto,
 } from "../types/eventDto";
 
@@ -39,8 +40,11 @@ export const eventEntity = {
 
     return { event: result, status: status };
   },
-  getEvents: async (): Promise<any | null> => {
+  getEvents: async (id: number): Promise<any> => {
     const events = await prisma.event.findMany({
+      where: {
+        ownerId: id,
+      },
       include: {
         eventItenary: {
           select: {

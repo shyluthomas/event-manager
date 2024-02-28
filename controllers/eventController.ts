@@ -1,10 +1,16 @@
 import { eventEntity } from "../entities/event";
 
-import { statusCode, upload } from "../lib";
+import { statusCode, tokenHandler, upload } from "../lib";
 import * as fs from "fs";
 import * as path from "path";
-import { EventCreateDto, createEventResponseDto } from "../types/eventDto";
+import {
+  EventCreateDto,
+  EventListDto,
+  ListEventResponseDto,
+  createEventResponseDto,
+} from "../types/eventDto";
 import helpers from "../lib/helpers";
+import { decodedTokenDetailsDto } from "../types";
 const uploadPath = "uploads";
 
 export const eventController = {
@@ -31,11 +37,13 @@ export const eventController = {
     }
     return response;
   },
-  getEvents: async (): Promise<any> => {
-    const response = await eventEntity.getEvents();
+  getEvents: async (): Promise<ListEventResponseDto> => {
+    const tokenData: decodedTokenDetailsDto = tokenHandler.tokenData;
+    const userId: number = tokenData.user.id;
+    const response: EventListDto = await eventEntity.getEvents(userId);
     if (!response) {
-      return { status: statusCode.HTTP_NOTFOUND, events: null };
+      return { status: statusCode.HTTP_NOTFOUND, event: null };
     }
-    return { status: statusCode.HTTP_SUCESS, events: response };
+    return { status: statusCode.HTTP_SUCESS, event: response };
   },
 };

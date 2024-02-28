@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { loginController } from "../controllers";
 import helpers from "../lib/helpers";
+import { tokenHandler } from "../lib";
 
 export function authtValidator() {
   return async function (req: Request, res: Response, next: NextFunction) {
@@ -14,6 +15,8 @@ export function authtValidator() {
       }
       const validate: boolean = await loginController.validateAuthToken(token);
       if (validate) {
+        /* set the token for future read */
+        tokenHandler.tokenData = decodeToken.tokenData;
         return next();
       }
     } catch (e) {

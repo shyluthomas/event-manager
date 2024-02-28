@@ -3,20 +3,16 @@ import { eventController } from "../controllers/eventController";
 import { createEventSchema } from "../schemas";
 import { requestValidator } from "../middlewares";
 import { authtValidator } from "../middlewares/authValidator";
+import { ListEventResponseDto } from "../types/eventDto";
 
 export const eventRoutes = express.Router();
 
 /* getting Events */
-eventRoutes.get(
-  "/",
-  requestValidator(createEventSchema),
-  authtValidator(),
-  async (req, res) => {
-    console.log("/get events");
-    const response = await eventController.getEvents();
-    res.status(200).send(response);
-  }
-);
+eventRoutes.get("/", authtValidator(), async (req, res) => {
+  console.log("/get events");
+  const response: ListEventResponseDto = await eventController.getEvents();
+  res.status(response.status).send(response);
+});
 
 /* getting Event by ID */
 eventRoutes.get("/:id", async (req, res) => {
