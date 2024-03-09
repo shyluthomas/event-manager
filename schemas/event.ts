@@ -19,7 +19,7 @@ export const createEventSchema = z.object({
 
 export const getEventSchema = z.object({
   params: z.object({
-    id: z.number({ required_error: "Event id is required" }),
+    id: z.string({ required_error: "Event id is required" }),
   }),
 });
 
