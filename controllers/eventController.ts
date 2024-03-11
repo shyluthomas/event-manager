@@ -9,6 +9,7 @@ import {
   EventListDto,
   ListEventResponseDto,
   createEventResponseDto,
+  deleteEventResponseDto,
 } from "../types/eventDto";
 import helpers from "../lib/helpers";
 import { decodedTokenDetailsDto } from "../types";
@@ -63,5 +64,12 @@ export const eventController = {
       return { status: statusCode.HTTP_NOTFOUND, event: null };
     }
     return { status: statusCode.HTTP_SUCESS, event: response.event };
+  },
+  deleteEvent: async (id: number): Promise<deleteEventResponseDto> => {
+    const response: deleteEventResponseDto = await eventEntity.deleteEvent(id);
+    if (response.status != 200) {
+      return { status: statusCode.HTTP_NOTFOUND };
+    }
+    return { status: statusCode.HTTP_SUCESS };
   },
 };

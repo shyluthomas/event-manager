@@ -59,3 +59,7 @@ export type ListEventResponseDto = Success | eventError;
 export type EventGetResponseDto = EventGetDto & {
   status: boolean;
 };
+
+export type deleteEventResponseDto = {
+  status: number;
+};

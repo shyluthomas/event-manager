@@ -5,6 +5,7 @@ import {
   EventGetDto,
   EventListDto,
   createEventResponseDto,
+  deleteEventResponseDto,
 } from "../types/eventDto";
 
 export const eventEntity = {
@@ -117,5 +118,21 @@ export const eventEntity = {
     }
 
     return { event: result, status: status };
+  },
+  deleteEvent: async (id: number): Promise<deleteEventResponseDto> => {
+    let respone = { status: 404 };
+    try {
+      const data = await prisma.event.delete({
+        where: {
+          id: id,
+        },
+      });
+      if (data) {
+        respone = { status: 200 };
+      }
+    } catch (e) {
+      respone = { status: 404 };
+    }
+    return respone;
   },
 };

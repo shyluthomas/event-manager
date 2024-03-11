@@ -7,7 +7,10 @@ import {
 } from "../schemas";
 import { requestValidator } from "../middlewares";
 import { authtValidator } from "../middlewares/authValidator";
-import { ListEventResponseDto } from "../types/eventDto";
+import {
+  ListEventResponseDto,
+  deleteEventResponseDto,
+} from "../types/eventDto";
 
 export const eventRoutes = express.Router();
 
@@ -61,6 +64,15 @@ eventRoutes.patch(
 );
 
 /* Delete Events */
-eventRoutes.delete("/", async (req, res) => {
-  console.log("/delete events");
-});
+eventRoutes.delete(
+  "/:id",
+  authtValidator(),
+  requestValidator(getEventSchema),
+  async (req, res) => {
+    const id = req.params.id as string;
+    const response: deleteEventResponseDto = await eventController.deleteEvent(
+      parseInt(id, 10)
+    );
+    res.status(response.status).send(response);
+  }
+);
