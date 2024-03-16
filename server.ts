@@ -6,6 +6,7 @@ import { userRoutes, healthRoute, eventRoutes, profileRoutes } from "./routes";
 import { logger, errorHandler } from "./middlewares";
 import { authRoutes } from "./routes/authRoutes";
 import cors = require("cors");
+import { eventCategoryRoutes } from "./routes/eventCategoryRoutes";
 export const startServer = () => {
   const port = process.env.PORT || 8044;
   const app = express();
@@ -27,6 +28,7 @@ export const startServer = () => {
   app.use("/auth", authRoutes);
   app.use("/event", eventRoutes);
   app.use("/profile", profileRoutes);
+  app.use("/eventcat", eventCategoryRoutes);
 
   /* Handling Error */
   app.use(errorHandler);
