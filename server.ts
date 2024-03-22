@@ -7,6 +7,7 @@ import { logger, errorHandler } from "./middlewares";
 import { authRoutes } from "./routes/authRoutes";
 import cors = require("cors");
 import { eventCategoryRoutes } from "./routes/eventCategoryRoutes";
+import { inviteRoutes } from "./routes/inviteRoutes";
 export const startServer = () => {
   const port = process.env.PORT || 8044;
   const app = express();
@@ -29,6 +30,7 @@ export const startServer = () => {
   app.use("/event", eventRoutes);
   app.use("/profile", profileRoutes);
   app.use("/eventcat", eventCategoryRoutes);
+  app.use("/invite", inviteRoutes);
 
   /* Handling Error */
   app.use(errorHandler);

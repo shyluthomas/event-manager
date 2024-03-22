@@ -71,13 +71,15 @@ model Invite {
   ticket Tickets?
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId Int
+  email String
 }
 
 model Tickets {
-  id Int @id
+  id Int @id @default(autoincrement())
   invite Invite @relation(fields: [inviteId],references: [id], onDelete: Cascade)
   inviteId Int @unique
   status Boolean
+  ticketCode String
  
 }
 
