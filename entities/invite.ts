@@ -20,7 +20,7 @@ export const inviteEntity = {
           status: invite.status,
           inviterId: invite.inviterId,
           eventId: invite.eventId,
-          email: invite.email,
+          email: JSON.stringify(invite.email),
           ticket: {
             create: {
               status: true,
@@ -35,7 +35,7 @@ export const inviteEntity = {
     } catch (e) {
       result = null;
       status = statusCode.HTTP_NOTFOUND;
-      console.log("error", e);
+      console.log("error ee", e);
     }
 
     return { invite: result, status: status };

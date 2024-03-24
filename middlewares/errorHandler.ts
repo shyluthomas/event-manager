@@ -7,7 +7,7 @@ export function errorHandler(
   res: Response<errorDto>,
   next: NextFunction
 ) {
-  console.error("error");
+  console.error("error", err);
   res
     .status(err.status || 500)
     .send({ message: err.message || "Internal server Error" });

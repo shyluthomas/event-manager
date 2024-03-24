@@ -1,8 +1,14 @@
+export type MailData = {
+  to: string;
+  subject: string;
+  text: string
+}
+
 export type InviteDto = {
   status: boolean;
   inviterId: number;
   eventId: number;
-  email: string;
+  email: MailData;
 };
 export type InviteGetDto = {
   id: number;

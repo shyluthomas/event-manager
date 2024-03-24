@@ -11,11 +11,8 @@ import {
   createEventResponseDto,
   deleteEventResponseDto,
 } from "../types/eventDto";
-import helpers from "../lib/helpers";
-import { decodedTokenDetailsDto } from "../types";
 import { InviteDto, InviteGetDto, ListInviteResponseDto, createInviteResponseDto } from "../types/inviteDto";
 import { inviteEntity } from "../entities/invite";
-const uploadPath = "uploads";
 
 export const inviteController = {
   createInvite: async (
@@ -24,12 +21,14 @@ export const inviteController = {
     let response: createInviteResponseDto = { invite: null, status: 400 };
     try {
     
-      const inviteData: createInviteResponseDto = await inviteEntity.createInvite(
-        invite
-      );
-      response = { invite: inviteData.invite, status: inviteData.status };
+      // const mailInvite = await mailer.sendMail(invite.email) as EmailresponsType;
+     
+        const inviteData: createInviteResponseDto = await inviteEntity.createInvite(
+          invite
+        );
+        response = { invite: inviteData.invite, status: inviteData.status };
+     
     } catch (e) {
-      console.log(e);
       return { invite: null, status: 400 };
     }
     return response;

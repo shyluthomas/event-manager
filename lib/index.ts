@@ -5,3 +5,4 @@ export * from "./helpers";
 export * from "./constants";
 export * from "./storage";
 export * from "./tokenHandler";
+export * from "./mailer";
